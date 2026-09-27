@@ -1,0 +1,29 @@
+flowchart LR
+    U["Usuário"]
+    subgraph F["Apresentação — navegador"]
+        R["Páginas e componentes React<br/>Interface e ações"]
+        L["Armazenamento local<br/>Token da sessão"]
+    end
+    subgraph B["Backend — Express"]
+        direction TB
+        subgraph A["Entrada da API"]
+            A1["app.js<br/>Rotas de perguntas e respostas"]
+            A2["routes/votacao.js<br/>Rotas de contas e votos"]
+        end
+        subgraph N["Negócio"]
+            N1["modelo.js<br/>Operações e SQL de perguntas e respostas"]
+            N2["services/<br/>Regras de contas e votação"]
+        end
+        subgraph D["Acesso a dados"]
+            D1["bd/bd_utils.js<br/>Consultas de perguntas e respostas"]
+            D2["repositories/<br/>Consultas de contas e votos"]
+        end
+        DB[("SQLite<br/>bd/esmforum.db")]
+    end
+    U --> R
+    R <--> L
+    R -- "HTTP + JSON<br/>perguntas e respostas" --> A1
+    R -- "HTTP + JSON<br/>contas e votação" --> A2
+    L -. "Token no cabeçalho Authorization" .-> A2
+    A1 --> N1 --> D1 --> DB
+    A2 --> N2 --> D2 --> DB
