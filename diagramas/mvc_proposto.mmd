@@ -1,0 +1,31 @@
+flowchart LR
+    F["React<br/>Interface do fórum"]
+    subgraph API["Apresentação da API"]
+        direction TB
+        RP["Rota de perguntas<br/>GET / e POST /perguntas"]
+        RV["Rota de votos<br/>GET votos e PUT voto"]
+        CP["PerguntasController"]
+        CV["VotosController"]
+        VP["PerguntasJson"]
+        VV["VotosJson"]
+    end
+    subgraph MODEL["Model — regras e dados"]
+        direction TB
+        SP["PerguntasService<br/>Cadastro e listagem"]
+        SV["VotacaoService<br/>Registrar, trocar e retirar voto"]
+        SI["IdentidadeService<br/>Identificar sessão"]
+        DP["PerguntasRepositorySqlite"]
+        DV["VotosRepositorySqlite"]
+        DI["IdentidadeRepositorySqlite"]
+    end
+    DB[("SQLite<br/>Perguntas, usuários,<br/>sessões e votos")]
+    F -- "HTTP + JSON" --> RP
+    F -- "HTTP + JSON + token" --> RV
+    RP --> CP --> SP --> DP --> DB
+    RV --> CV
+    CV --> SI --> DI --> DB
+    CV --> SV --> DV --> DB
+    SP -- "Perguntas" --> CP
+    SV -- "Voto e totais" --> CV
+    CP --> VP -- "JSON" --> F
+    CV --> VV -- "JSON" --> F
