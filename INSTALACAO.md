@@ -26,7 +26,7 @@ Depois, inicie o servidor:
 node server.js
 ```
 
-O terminal deve mostrar `ESM Forum rodando em 5000`. Em http://localhost:5000, aparecem as perguntas em formato JSON. O banco SQLite já está incluído em `bd/esmforum.db`.
+O terminal deve mostrar ESM Forum rodando em 5000. Em http://localhost:5000, aparecem as perguntas em formato JSON. O banco SQLite já vem no arquivo bd/esmforum.db.
 
 ## Frontend
 
@@ -38,20 +38,20 @@ npm install
 npm start
 ```
 
-A interface fica disponível em http://localhost:3000. Os dois terminais precisam continuar abertos enquanto o sistema estiver em uso. Para encerrar, pressione `Ctrl+C` em cada um.
+A interface fica disponível em http://localhost:3000. Os dois terminais precisam continuar abertos enquanto o sistema estiver em uso. Para encerrar, pressione Ctrl+C em cada um.
 
-Para conferir se tudo funciona, cadastre uma pergunta, adicione uma resposta e atualize a página. No teste realizado, os dados permaneceram salvos e o contador de respostas foi atualizado.
+Para conferir se tudo funciona, cadastre uma pergunta, adicione uma resposta e atualize a página. No teste feito após a instalação, os dados continuaram salvos e o contador de respostas foi atualizado.
 
 ## Se a instalação falhar no SQLite
 
-Durante a instalação, o pacote `sqlite3` apresentou o erro `No prebuilt binaries found`, com versão N-API `undefined`. Se isso acontecer, execute na pasta `esmforum`:
+Durante a instalação, apareceu no pacote sqlite3 o erro No prebuilt binaries found, com versão N-API undefined. Se isso acontecer, execute na pasta esmforum:
 
 ```bash
 npm install --ignore-scripts
 npm rebuild --foreground-scripts
 ```
 
-Neste ambiente, o segundo comando preparou o `better-sqlite3`, mas ainda falhou no `sqlite3`. Para concluir a instalação desse pacote:
+Na instalação do projeto, o segundo comando preparou o better-sqlite3, mas ainda falhou no sqlite3. Para concluir a instalação desse pacote:
 
 ```bash
 cd node_modules/sqlite3
