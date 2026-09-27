@@ -1,0 +1,47 @@
+classDiagram
+    class ServicoRespostas {
+        -respostas
+        -eventosPendentes
+        +cadastrar(pergunta, autor, texto) Resposta
+    }
+    class RepositorioRespostas {
+        +cadastrar(pergunta, autor, texto) Resposta
+    }
+    class RepositorioEventosPendentes {
+        +gravar(evento)
+        +listar() Evento[]
+        +marcarProcessado(id)
+    }
+    class ProcessadorEventos {
+        -eventosPendentes
+        -publicador
+        +processar()
+    }
+    class PublicadorEventos {
+        -observadores
+        +inscrever(observador)
+        +publicar(evento)
+    }
+    class ObservadorResposta {
+        <<interface>>
+        +aoResponder(evento)
+    }
+    class NotificadorAutor {
+        -perguntas
+        -notificacoes
+        +aoResponder(evento)
+    }
+    class RepositorioPerguntas {
+        +buscarAutor(pergunta) Usuario
+    }
+    class RepositorioNotificacoes {
+        +criarSeAusente(evento, destino)
+    }
+    ServicoRespostas --> RepositorioRespostas : salva
+    ServicoRespostas --> RepositorioEventosPendentes : grava evento
+    ProcessadorEventos --> RepositorioEventosPendentes : le e confirma
+    ProcessadorEventos --> PublicadorEventos : publica
+    PublicadorEventos o-- ObservadorResposta : avisa
+    ObservadorResposta <|.. NotificadorAutor
+    NotificadorAutor --> RepositorioPerguntas : consulta
+    NotificadorAutor --> RepositorioNotificacoes : grava

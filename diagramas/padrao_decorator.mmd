@@ -1,0 +1,30 @@
+classDiagram
+    class BuscaPerguntas {
+        <<interface>>
+        +buscar() Pergunta[]
+    }
+    class BuscaBase {
+        -repositorio
+        +buscar() Pergunta[]
+    }
+    class FiltroBusca {
+        -origem
+        +buscar() Pergunta[]
+    }
+    class FiltroPalavra {
+        -termo
+        +buscar() Pergunta[]
+    }
+    class FiltroTag {
+        -tag
+        +buscar() Pergunta[]
+    }
+    class RepositorioPerguntas {
+        +listarComTags() Pergunta[]
+    }
+    BuscaPerguntas <|.. BuscaBase
+    BuscaPerguntas <|.. FiltroBusca
+    FiltroBusca <|-- FiltroPalavra
+    FiltroBusca <|-- FiltroTag
+    FiltroBusca o-- BuscaPerguntas : envolve
+    BuscaBase --> RepositorioPerguntas : consulta

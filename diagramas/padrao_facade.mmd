@@ -1,0 +1,23 @@
+classDiagram
+    class RotaPerfil {
+        +consultar(id) JSON
+    }
+    class FachadaPerfil {
+        -usuarios
+        -perguntas
+        -respostas
+        +obterPerfil(id) Perfil
+    }
+    class RepositorioUsuarios {
+        +buscar(id) Usuario
+    }
+    class RepositorioPerguntas {
+        +listarPorUsuario(id) Pergunta[]
+    }
+    class RepositorioRespostas {
+        +listarPorUsuario(id) Resposta[]
+    }
+    RotaPerfil --> FachadaPerfil : chama
+    FachadaPerfil --> RepositorioUsuarios : consulta
+    FachadaPerfil --> RepositorioPerguntas : consulta
+    FachadaPerfil --> RepositorioRespostas : consulta
