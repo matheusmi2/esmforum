@@ -1,0 +1,17 @@
+stateDiagram-v2
+    direction LR
+
+    state "Positivo (+1)" as Positivo
+    state "Negativo (-1)" as Negativo
+
+    [*] --> Positivo: Registrar upvote
+    [*] --> Negativo: Registrar downvote
+
+    Positivo --> Negativo: Trocar para downvote
+    Negativo --> Positivo: Trocar para upvote
+
+    Positivo --> Positivo: Repetir upvote / manter voto
+    Negativo --> Negativo: Repetir downvote / manter voto
+
+    Positivo --> [*]: Retirar voto / excluir registro
+    Negativo --> [*]: Retirar voto / excluir registro

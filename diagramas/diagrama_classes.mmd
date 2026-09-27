@@ -1,0 +1,36 @@
+classDiagram
+    direction TB
+
+    class Usuario {
+        +int id_usuario
+        +string nome
+    }
+
+    class Pergunta {
+        +int id_pergunta
+        +string texto
+    }
+
+    class Resposta {
+        +int id_resposta
+        +string texto
+    }
+
+    class Voto {
+        +int id_voto
+        +int valor
+    }
+
+    class Tag {
+        +int id_tag
+        +string nome
+    }
+
+    Usuario "1" -- "0..*" Pergunta : publica
+    Usuario "1" -- "0..*" Resposta : escreve
+    Pergunta "1" -- "0..*" Resposta : recebe
+    Usuario "1" -- "0..*" Voto : registra
+    Pergunta "1" -- "0..*" Voto : recebe
+    Pergunta "0..*" -- "0..*" Tag : possui
+
+    note for Voto "valor: +1 ou -1\nNo máximo um voto por usuário em cada pergunta"

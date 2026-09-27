@@ -1,0 +1,38 @@
+sequenceDiagram
+    actor U as Usuário
+    participant F as :Frontend
+    participant A as :API
+    participant B as :Banco
+
+    Note over U,B: Usuário identificado e pergunta disponível
+    F-->>U: Mostrar pergunta, pontuação e voto atual
+    U->>F: Votar ou retirar o voto
+    F->>A: Enviar pergunta e ação escolhida
+    A->>A: Identificar usuário e validar ação
+    A->>B: Consultar pergunta e voto do usuário
+    B-->>A: Retornar pergunta e voto, se houver
+
+    break Solicitação inválida ou pergunta não encontrada
+        A-->>F: Informar erro sem alterar os votos
+        F-->>U: Mostrar mensagem de erro
+    end
+
+    alt Retirar voto
+        A->>B: Remover voto do usuário nessa pergunta, se houver
+        B-->>A: Confirmar operação
+    else Registrar voto positivo ou negativo
+        alt Usuário ainda não votou
+            A->>B: Inserir voto ligado ao usuário e à pergunta
+            B-->>A: Confirmar gravação
+        else Voto diferente do anterior
+            A->>B: Substituir valor do voto existente
+            B-->>A: Confirmar alteração
+        else Mesmo voto já registrado
+            A->>A: Manter voto sem duplicar o registro
+        end
+    end
+
+    A->>B: Consultar soma dos votos e voto atual do usuário
+    B-->>A: Retornar pontuação e voto atual
+    A-->>F: Confirmar resultado da operação
+    F-->>U: Atualizar pontuação e marcação do voto sem recarregar

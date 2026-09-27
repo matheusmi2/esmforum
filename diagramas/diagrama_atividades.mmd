@@ -1,0 +1,19 @@
+flowchart TD
+    inicio((" ")) --> abrir("Abrir a página de perguntas")
+    abrir --> listar("Mostrar a lista completa e o campo de busca")
+    listar --> acao("Digitar um termo e iniciar a busca<br/>ou limpar o campo")
+    acao --> vazio{"O campo está vazio?"}
+
+    vazio -- Sim --> completa("Mostrar a lista completa")
+    vazio -- Não --> buscar("Buscar perguntas que contenham o termo<br/>sem diferenciar maiúsculas de minúsculas")
+    buscar --> encontrou{"Encontrou perguntas?"}
+
+    encontrou -- Sim --> resultados("Mostrar as perguntas encontradas<br/>com acesso às respostas")
+    encontrou -- Não --> mensagem("Informar que não foram encontrados resultados")
+
+    completa --> fim(((" ")))
+    resultados --> fim
+    mensagem --> fim
+
+    style inicio fill:#222,stroke:#222
+    style fim fill:#222,stroke:#222
